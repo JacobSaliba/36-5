@@ -1,0 +1,50 @@
+/* 36:5 reader: mono + ONE colour (Signal blue), as the booklet. No boxes, nothing behind text. */
+:root {
+  --ink: #1A1A18; --graph: #6E6B64; --rule: #B9B4A8; --blue: #1F3FD6; --ground: #ECEAE5;
+  --bar: 44px;
+  --mono: ui-monospace, "SF Mono", "Cascadia Mono", Menlo, Consolas, monospace;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; height: 100%; background: var(--ground); color: var(--ink); }
+body { font: 11px/1.4 var(--mono); letter-spacing: .08em; text-transform: uppercase; overflow: hidden;
+       -webkit-font-smoothing: antialiased; }
+button { font: inherit; letter-spacing: inherit; text-transform: inherit; color: inherit; background: none; border: 0; padding: 0; cursor: pointer; }
+a { color: inherit; }
+:focus-visible { outline: 1.5px solid var(--blue); outline-offset: 3px; }
+
+.bar { position: fixed; inset: 0 0 auto 0; height: var(--bar); display: flex; align-items: center; gap: 24px;
+       padding: 0 max(20px, env(safe-area-inset-right)) 0 max(20px, env(safe-area-inset-left));
+       border-bottom: 1px solid var(--rule); z-index: 3; background: var(--ground); }
+.t { white-space: nowrap; }
+.sec { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; color: var(--graph); text-transform: none; letter-spacing: .02em; }
+.count { color: var(--graph); font-variant-numeric: tabular-nums; }
+.dl { color: var(--blue); text-decoration: none; border-bottom: 1px solid var(--blue); }
+#tocBtn[aria-expanded="true"] { color: var(--blue); }
+
+.stage { position: fixed; inset: var(--bar) 0 0 0; display: flex; align-items: center; justify-content: center;
+         padding: 24px; touch-action: pan-y pinch-zoom; }
+.spread { display: flex; height: 100%; max-width: 100%; align-items: center; justify-content: center; }
+.spread img { display: block; flex: none; box-shadow: 0 1px 0 rgba(26,26,24,.12), 0 6px 24px rgba(26,26,24,.10); background: #fff; }
+.edge { position: absolute; top: 0; bottom: 0; width: 22%; z-index: 1; }
+.edge.prev { left: 0; cursor: w-resize; } .edge.next { right: 0; cursor: e-resize; }
+.edge:disabled { cursor: default; }
+
+.toc { position: fixed; top: var(--bar); left: 0; bottom: 0; width: min(420px, 100%); overflow-y: auto; z-index: 2;
+       background: var(--ground); border-right: 1px solid var(--rule); padding: 16px 20px 40px; }
+.toc ol { list-style: none; margin: 0; padding: 0; }
+.toc li a { display: flex; gap: 12px; justify-content: space-between; padding: 7px 0; border-bottom: 1px solid var(--rule);
+            text-decoration: none; text-transform: none; letter-spacing: .02em; font-size: 12px; }
+.toc li.l2 a { padding-left: 16px; color: var(--graph); }
+.toc li a:hover, .toc li.on a { color: var(--blue); }
+.toc li a span:last-child { font-variant-numeric: tabular-nums; color: var(--graph); }
+
+.nojs { position: fixed; inset: 40% 0 auto; text-align: center; }
+
+@media (max-width: 720px) {
+  body { font-size: 10px; }
+  .bar { gap: 14px; }
+  .sec { display: none; }
+  .count { flex: 1; text-align: center; }
+  .stage { padding: 10px; }
+  .edge { width: 30%; }
+}
